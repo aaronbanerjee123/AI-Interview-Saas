@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mona_Sans, Geist_Mono } from "next/font/google";
+import { Mona_Sans } from "next/font/google";
 import "./globals.css";
 
 const monaSans = Mona_Sans({
@@ -13,14 +13,14 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en" className="dark">
       <body
-        className={`${monaSans.variable} ${geistMono.variable} antialiased`}
+        className={`${monaSans.variable} antialiased`}
       >
         {children}
       </body>
