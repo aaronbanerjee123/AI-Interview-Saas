@@ -61,7 +61,7 @@ const AuthForm = ({type}:{type:FormType}) => {
             toast.success('Account created successfully')
             router.push('/sign-in')
             console.log('SIGN UP',values);
-
+ 
         }else{
           const {email,password} = values;
           const userCredentials = await signInWithEmailAndPassword(auth,email,password);
