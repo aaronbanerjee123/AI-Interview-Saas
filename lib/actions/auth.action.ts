@@ -2,7 +2,6 @@
 
 import { auth, db } from "@/firebase/admin";
 import { cookies } from "next/headers";
-import { isAbsolute } from './../../node_modules/@protobufjs/path/index.d';
 
 const ONE_WEEK = 60* 60 * 24 * 7;
 
@@ -69,7 +68,7 @@ export async function signIn(params:SignInParams){
 export async function setSessionCookie(idToken:string){
     const cookieStore = await cookies();
     const sessionCookie = await auth.createSessionCookie(idToken, {
-        expiresIn:ONE_WEEK,
+        expiresIn:ONE_WEEK * 1000,
         
     })
 
@@ -101,7 +100,11 @@ export async function getCurrentUser():Promise<User | null> {
             ...(userRecord.data()),
             id:userRecord.id
         } as User;
-    } catch (error) {
+    } catch (error:any) {
+        // if(error?.code ==='auth/session-cookie-expired'){
+        //     cookieStore.delete('session');
+        //     return null;
+        // }
         console.log(error);
         return null;
     }
@@ -111,6 +114,6 @@ export async function getCurrentUser():Promise<User | null> {
 export async function isAuthenticated() {
     const user = await getCurrentUser();
  
-    return !!user;
+    return  !!user;
 
 }
