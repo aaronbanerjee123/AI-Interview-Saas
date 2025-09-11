@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   );
   console.log(`[${timestamp}] Origin:`, request.headers.get("origin"));
   const { type, role, level, techstack, amount, userid } = await request.json();
-
+  let parsedQuestions;
   try {
     const { text: questions } = await generateText({
       model: google("gemini-2.0-flash-001"),
@@ -33,6 +33,8 @@ export async function POST(request: Request) {
         Thank you! <3
     `,
     });
+
+    parsedQuestions = JSON.parse(questions);
 
     const interview = {
       role,
@@ -52,6 +54,6 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error(error);
 
-    return Response.json({ success: false, error }, { status: 500 });
+    return Response.json({ success: false, error, questions:parsedQuestions}, { status: 500 });
   }
 }
