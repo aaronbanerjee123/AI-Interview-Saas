@@ -54,7 +54,7 @@ export async function POST(request: Request) {
     return Response.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error(error);
-
+    console.log(role);
     return Response.json({ success: false, error,requestData: { type, role, level, techstack, amount, userid }, // confirm incoming data
 }, { status: 500 });
   }
